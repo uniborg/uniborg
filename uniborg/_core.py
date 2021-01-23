@@ -61,3 +61,29 @@ async def list_plugins(event):
         await event.edit(result)
     else:
         await event.respond(result)
+
+
+@borg.on(borg.cmd(r"help(?: (?P<shortname>\w+))?"))
+async def help(event):
+    if not borg.me.bot:
+        return
+
+    shortname = event.pattern_match["shortname"]
+    plugin_dict = {}
+
+    for name, mod in sorted(borg._plugins.items(), key=lambda t: t[0]):
+        if name == "_core":
+            continue
+        desc = (mod.__doc__ or "No Description")
+        plugin_dict[name] = desc
+
+    plugin_list = "`\n• `".join(plugin_dict)
+
+    if not shortname:
+        result = f"**Plugins:** \
+                   \n• `{plugin_list}` \
+                   \n\nSend `/help plugin_name` for more information."
+    else:
+        result = plugin_dict[shortname]
+
+    await event.reply(result)
