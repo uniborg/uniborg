@@ -45,6 +45,7 @@ async def _(event):
                 return
 
         url = meta["large_file_url"]
+        url_orig = meta["file_url"]
         message_text = f"https://danbooru.donmai.us/posts/{post_id}"
         if source := meta.get("tag_string_copyright"):
             message_text += f"\nSource: {fix_tag_string(source)}"
@@ -54,7 +55,7 @@ async def _(event):
             message_text += f"\nArtist: {fix_tag_string(artist)}"
 
         try:
-            await event.respond(
+            m = await event.respond(
                 message_text,
                 file=url,
                 reply_to=event.message.reply_to_msg_id,
@@ -65,3 +66,7 @@ async def _(event):
             await event.edit(message_text, parse_mode=None)
         else:
             await event.delete()
+            try:
+                await m.edit(file=url_orig)
+            except:
+                pass
