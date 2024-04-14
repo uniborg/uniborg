@@ -75,7 +75,7 @@ async def _(event):
         if index["error"]:
             logger.warn(index["message"])
             return
-        urls = [i["urls"]["regular"] for i in index["body"]]
+        urls = index["body"]
         total = len(urls)
 
         if subrange is not None:
@@ -99,8 +99,14 @@ async def _(event):
         )
         await event.delete()
 
+        async def do_edit(msg, url):
+            await msg.edit(file=url["urls"]["regular"])
+            try:
+                await msg.edit(file=url["urls"]["original"])
+            except:
+                pass
         for u, m in zip(urls, messages):
-            asyncio.create_task(m.edit(file=u))
+            asyncio.create_task(do_edit(m, u))
 
 async def ugoira(event, gallery_id, session, metadata):
     if metadata["error"]:
