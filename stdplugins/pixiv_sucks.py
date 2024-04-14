@@ -100,11 +100,10 @@ async def _(event):
         await event.delete()
 
         async def do_edit(msg, url):
-            await msg.edit(file=url["urls"]["regular"])
             try:
                 await msg.edit(file=url["urls"]["original"])
             except:
-                pass
+                await msg.edit(file=url["urls"]["regular"])
         for u, m in zip(urls, messages):
             asyncio.create_task(do_edit(m, u))
 

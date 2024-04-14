@@ -54,19 +54,20 @@ async def _(event):
         if artist := meta.get("tag_string_artist"):
             message_text += f"\nArtist: {fix_tag_string(artist)}"
 
-        try:
-            m = await event.respond(
+        async def post_image(url):
+            return await event.respond(
                 message_text,
                 file=url,
                 reply_to=event.message.reply_to_msg_id,
                 parse_mode=None,
             )
+        try:
+            try:
+                m = await post_image(url_orig)
+            except:
+                m = await post_image(url)
         except:
             message_text += "\n(Telegram rejected the upload)"
             await event.edit(message_text, parse_mode=None)
         else:
             await event.delete()
-            try:
-                await m.edit(file=url_orig)
-            except:
-                pass
