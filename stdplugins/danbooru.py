@@ -47,12 +47,16 @@ async def _(event):
         url = meta["large_file_url"]
         url_orig = meta["file_url"]
         message_text = f"https://danbooru.donmai.us/posts/{post_id}"
+        touhou = False
         if source := meta.get("tag_string_copyright"):
             message_text += f"\nSource: {fix_tag_string(source)}"
+            touhou = "touhou" in source
         if chars := meta.get("tag_string_character"):
             message_text += f"\nCharacters: {fix_tag_string(chars)}"
         if artist := meta.get("tag_string_artist"):
             message_text += f"\nArtist: {fix_tag_string(artist)}"
+        if touhou:
+            message_text += "\n@marissachan"
 
         async def post_image(url):
             return await event.respond(
