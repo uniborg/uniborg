@@ -15,6 +15,8 @@ generic_filters = [
     re.compile(r"(?i)Get your free \w+ Cats (?:\w+ Special Edition )?NFT today – a charming collection of unique, cute digital cat art\. Perfect for cat lovers and NFT collectors seeking something special"),
     re.compile(r"(?i)LUNAR NEW YEAR: Claim your Dragons and embarking on an enchanting journey into play-to-earn adventures\."),
     re.compile(r"(?i)Claim your first NFT and Share"),
+    re.compile(r"(?i)Rivalz Network"),
+    re.compile(r"(?i)LayerZero"),
 ]
 
 dot_io_filters = [
