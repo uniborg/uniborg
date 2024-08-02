@@ -14,6 +14,7 @@ generic_filters = [
     re.compile(r"(?i)Ethereum Layer 2 Rollup platform"),
     re.compile(r"(?i)Get your free \w+ Cats (?:\w+ Special Edition )?NFT today – a charming collection of unique, cute digital cat art\. Perfect for cat lovers and NFT collectors seeking something special"),
     re.compile(r"(?i)LUNAR NEW YEAR: Claim your Dragons and embarking on an enchanting journey into play-to-earn adventures\."),
+    re.compile(r"(?i)Claim your first NFT and Share"),
 ]
 
 dot_io_filters = [
@@ -26,7 +27,12 @@ async def is_spam(event):
 
     if isinstance(media, MessageMediaWebPage):
         webpage = media.webpage
-        dot_io = webpage.display_url.lower().endswith(".io")
+        domain = webpage.display_url.lower().split("/")[0]
+
+        if domain == "opensea.io":
+            return True
+
+        dot_io = domain.endswith(".io")
         for _, val in webpage.to_dict().items():
             if not isinstance(val, str):
                 continue
