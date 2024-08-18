@@ -11,12 +11,30 @@ from telethon.tl.types import MessageMediaWebPage
 
 generic_filters = [
     re.compile(r"(?i)claim your first \w+ and lets p2e"),
+    # https://t.me/c/2236603077/33 `PUCU: Claim your first PUCU and lets P2E`
+
     re.compile(r"(?i)Ethereum Layer 2 Rollup platform"),
+    # https://t.me/c/2236603077/32 `Ethereum Layer 2 Rollup platform - Metis`
+
     re.compile(r"(?i)Get your free \w+ Cats (?:\w+ Special Edition )?NFT today – a charming collection of unique, cute digital cat art\. Perfect for cat lovers and NFT collectors seeking something special"),
+    # https://t.me/c/2236603077/20 `Get your free CATGO Cats NFT today – a charming collection of unique, cute digital cat art. Perfect for cat lovers and NFT collectors seeking something special!`
+    # https://t.me/c/2236603077/21 `Get your free VUHUS Cats Christmas Special Edition NFT today – a charming collection of unique, cute digital cat art. Perfect for cat lovers and NFT collectors seeking something special!`
+
     re.compile(r"(?i)LUNAR NEW YEAR: Claim your Dragons and embarking on an enchanting journey into play-to-earn adventures\."),
-    re.compile(r"(?i)Claim your first NFT and Share"),
+
+    re.compile(r"(?i)Claim your first (?:\w+ )?NFT and Share"),
+    #re.compile(r"(?i)Claim your first \w+ NFT and Share \$[\d.]+ Rewards Pool \(\d+ NFT LEFT\)"),
+    # https://t.me/c/2236603077/29 `Claim your first Avufi NFT and Share $55.000 Rewards Pool (239 NFT LEFT)`
+
     re.compile(r"(?i)Rivalz Network"),
+    # https://t.me/c/2236603077/30
+
     re.compile(r"(?i)LayerZero"),
+    # https://t.me/c/2236603077/31
+
+    re.compile(r"(?i)➥ CLICK HERE TO MINT! ⮨"),
+    # https://t.me/c/2236603077/23 `🚨 ➥ CLICK HERE TO MINT! ⮨ ✅`
+    # https://t.me/c/2236603077/24 `➥ CLICK HERE TO MINT! ⮨ ✅`
 ]
 
 dot_io_filters = [
