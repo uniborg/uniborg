@@ -35,6 +35,14 @@ generic_filters = [
     re.compile(r"(?i)➥ CLICK HERE TO MINT! ⮨"),
     # https://t.me/c/2236603077/23 `🚨 ➥ CLICK HERE TO MINT! ⮨ ✅`
     # https://t.me/c/2236603077/24 `➥ CLICK HERE TO MINT! ⮨ ✅`
+
+    # "Trump Game"
+    # https://t.me/c/2236603077/25
+    # https://t.me/c/2236603077/28
+    # https://t.me/c/2236603077/5
+
+    # Bot links
+    # https://t.me/c/2236603077/27
 ]
 
 dot_io_filters = [
