@@ -78,5 +78,8 @@ async def is_spam(event):
 
 @borg.on(events.NewMessage())
 async def _(event):
+    if event.message.out and event.message.saved_peer_id is None:
+        return
+
     if await is_spam(event):
         await event.delete()
