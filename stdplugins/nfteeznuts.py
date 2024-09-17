@@ -36,7 +36,7 @@ generic_filters = [
     # https://t.me/c/2236603077/23 `🚨 ➥ CLICK HERE TO MINT! ⮨ ✅`
     # https://t.me/c/2236603077/24 `➥ CLICK HERE TO MINT! ⮨ ✅`
 
-    re.compile(r"(?i)NFT \| FREE (MINT|CLAIM)"),
+    re.compile(r"(?i)NFT .* FREE (MINT|CLAIM)"),
     # https://t.me/c/2236603077/41
 
     # "Trump Game"
