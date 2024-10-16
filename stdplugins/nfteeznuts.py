@@ -54,6 +54,9 @@ dot_io_filters = [
 ]
 
 async def is_spam(event):
+    if "\u2068" in event.message.raw_text:
+        return True
+
     media = event.message.media
 
     if isinstance(media, MessageMediaWebPage):
@@ -69,6 +72,8 @@ async def is_spam(event):
                 continue
 
             # Spammers are getting cute
+            if "\u2068" in val:
+                return True
             val = val.replace("\u2068", "")
 
             for f in generic_filters:
