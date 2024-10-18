@@ -7,7 +7,7 @@ Deletes NFT spam
 import re
 
 from telethon import events
-from telethon.tl.types import MessageMediaWebPage
+from telethon.tl.types import MessageMediaWebPage, PeerChannel
 
 generic_filters = [
     re.compile(r"(?i)claim your first \w+ and lets p2e"),
@@ -94,6 +94,23 @@ async def is_spam(event):
 async def _(event):
     if event.message.out and event.message.saved_peer_id is None:
         return
+
+    # Only moderate incoming channel comments
+    # Comments are always replies,
+    # the top of the thread is a message sent by a PeerChannel
+    if not event.message.out:
+        message = event.message
+        if message.reply_to is None:
+            return
+        top_id = (
+            message.reply_to.reply_to_top_id
+            or message.reply_to.reply_to_msg_id
+        )
+        top = await borg.get_messages(event.input_chat, ids=top_id)
+        if top is None:
+            return
+        if not isinstance(top.from_id, PeerChannel):
+            return
 
     if await is_spam(event):
         await event.delete()
