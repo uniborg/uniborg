@@ -63,6 +63,9 @@ async def is_spam(event):
         webpage = media.webpage
         domain = webpage.display_url.lower().split("/")[0]
 
+        if webpage.type in ("telegram_bot", "telegram_botapp"):
+            return True
+
         if domain == "opensea.io":
             return True
 
