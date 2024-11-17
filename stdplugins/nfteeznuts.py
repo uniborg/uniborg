@@ -53,9 +53,15 @@ dot_io_filters = [
     re.compile(r"(?i)\b(?:get|claim|free)\b.*\bnfts?\b"),
 ]
 
+invisible_chars = [
+    "\u2062",
+    "\u2068",
+]
+
 async def is_spam(event):
-    if "\u2068" in event.message.raw_text:
-        return True
+    for c in invisible_chars:
+        if c in event.message.raw_text:
+            return True
 
     media = event.message.media
 
@@ -75,9 +81,9 @@ async def is_spam(event):
                 continue
 
             # Spammers are getting cute
-            if "\u2068" in val:
-                return True
-            val = val.replace("\u2068", "")
+            for c in invisible_chars:
+                if c in val:
+                    return True
 
             for f in generic_filters:
                 if f.search(val):
