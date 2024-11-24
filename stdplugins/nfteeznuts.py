@@ -54,8 +54,8 @@ dot_io_filters = [
 ]
 
 invisible_chars = [
-    "\u2062",
-    "\u2068",
+    # U+206x invisible punctuation
+    *(chr(c) for c in range(0x2060, 0x2070)),
 ]
 
 async def is_spam(event):
