@@ -46,6 +46,9 @@ generic_filters = [
 
     # Bot links
     # https://t.me/c/2236603077/27
+
+    # https://t.me/c/2236603077/90
+    re.compile(r"(?i)💎.*\$TGH"),
 ]
 
 dot_io_filters = [
@@ -61,6 +64,10 @@ invisible_chars = [
 async def is_spam(event):
     for c in invisible_chars:
         if c in event.message.raw_text:
+            return True
+
+    for f in generic_filters:
+        if f.search(event.message.raw_text):
             return True
 
     media = event.message.media
