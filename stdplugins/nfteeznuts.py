@@ -48,7 +48,7 @@ generic_filters = [
     # https://t.me/c/2236603077/27
 
     # https://t.me/c/2236603077/90
-    re.compile(r"(?i)💎.*\$TGH"),
+    re.compile(r"(?i)\$TGH\b.*@[a-z]+\d{5}\b"),
 ]
 
 dot_io_filters = [
