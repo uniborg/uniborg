@@ -137,13 +137,7 @@ async def _(event):
 
     source, target = (tl_langs[l.lower()].display_name for l in langs)
     result = f"<b>{source} → {target}:</b>\n{translated}"
-    if borg.me.bot:
-        action = event.respond
-    elif argtext:
-        action = event.reply
-    else:
-        action = event.edit
-    await action(result, parse_mode="html")
+    await event.respond(result, parse_mode="html")
 
 
 @borg.on(borg.cmd(r"tts", r"(?:\s+(?P<args>.*))?", "s"))
