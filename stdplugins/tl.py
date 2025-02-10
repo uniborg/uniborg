@@ -81,16 +81,39 @@ async def _(event):
     text = None
     argtext = False
     if args := event.pattern_match.group("args"):
-        args = args.split(":::", 1)
-        langs = args[0].split(">>", 1)
-        if (s:= langs[0]).lower() in tl_langs:
-            source = tl_langs[s].language_code
-        if len(langs) > 1 and (t:= langs[1]).lower() in tl_langs:
-            target = tl_langs[t].language_code
-        if len(args) > 1:
-            text = args[1]
-        elif source is None and target is None:
-            text = args[0]
+        has_triple_colon = ":::" in args
+        if has_triple_colon:
+            langs, text = args.split(":::", 1)
+        else:
+            langs = args
+        has_double_chevron = ">>" in langs
+        if has_double_chevron:
+            arg_source, arg_target = langs.split(">>", 1)
+        else:
+            arg_source, arg_target = langs, None
+
+        if has_triple_colon or has_double_chevron:
+            # We have an explicit language code for sure, enforce validity
+            if arg_source and (source := tl_langs.get(arg_source.lower())) is None:
+                await event.respond(f"Invalid language code: {arg_source}")
+                return
+            if arg_target and (target := tl_langs.get(arg_target.lower())) is None:
+                await event.respond(f"Invalid language code: {arg_target}")
+                return
+        else:
+            # No delimiters, must disambiguate
+            if arg_source and (source := tl_langs.get(arg_source.lower())) is None:
+                if event.is_reply:
+                    # Assume argument is a language and enforce validity
+                    await event.respond(f"Invalid language code: {arg_source}")
+                    return
+                else:
+                    text = args
+
+        if source:
+            source = source.language_code
+        if target:
+            target = target.language_code
 
     if target is None:
         target = PREFERRED_LANGUAGE
