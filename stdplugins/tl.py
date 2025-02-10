@@ -118,25 +118,12 @@ async def _(event):
     if target is None:
         target = PREFERRED_LANGUAGE
 
-    if event.is_reply:
-        text = (await event.get_reply_message()).raw_text
-    elif text:
+    if text:
         argtext = True
-    elif not borg.me.bot:
-        text = ''
-        started = False
-        async for m in borg.iter_messages(event.chat_id):
-            if started and m.sender_id == borg.uid:
-                break
-            if m.sender_id != borg.uid:
-                started = True
-            if not started or not m.raw_text:
-                continue
-            if ' ' in m.raw_text:
-                text = m.raw_text + '\n' + text
-            else:
-                text = m.raw_text + ' ' + text
+    elif event.is_reply:
+        text = (await event.get_reply_message()).raw_text
     else:
+        await event.respond("No text to translate!")
         return
 
     translation = (await tl_client.translate_text(
