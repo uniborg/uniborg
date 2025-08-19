@@ -61,6 +61,15 @@ invisible_chars = [
     *(chr(c) for c in range(0x2060, 0x2070)),
 ]
 
+italian_porn_pat = re.compile(r"(?i)^video \w+ sul mio profilo$")
+def is_italian_porn_bot(text):
+    text = (text
+        .lower()
+        .replace("\u0435", "e") # CYRILLIC SMALL LETTER IE
+        .replace("\u043e", "o") # CYRILLIC SMALL LETTER O
+    )
+    return bool(italian_porn_pat.match(text))
+
 async def is_spam(event):
     for c in invisible_chars:
         if c in event.message.raw_text:
@@ -69,6 +78,9 @@ async def is_spam(event):
     for f in generic_filters:
         if f.search(event.message.raw_text):
             return True
+
+    if is_italian_porn_bot(event.message.raw_text):
+        return True
 
     media = event.message.media
 
