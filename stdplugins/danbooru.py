@@ -48,6 +48,8 @@ async def _(event):
         url_orig = meta["file_url"]
         message_text = f"https://danbooru.donmai.us/posts/{post_id}"
         touhou = False
+        if src := meta.get("source"):
+            message_text += f"\n{src}"
         if source := meta.get("tag_string_copyright"):
             message_text += f"\nSource: {fix_tag_string(source)}"
             touhou = "touhou" in source
