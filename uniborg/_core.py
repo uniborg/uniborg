@@ -50,14 +50,34 @@ async def remove(event):
         await borg.delete_messages(msg.to_id, msg)
 
 
-@borg.on(borg.admin_cmd(r"plugins"))
-async def list_plugins(event):
-    result = f'{len(borg._plugins)} plugins loaded:'
+@borg.on(borg.cmd(r"plugins?(?: (?P<shortname>\w+))?"))
+@borg.on(borg.cmd(r"help(?: (?P<shortname>\w+))?"))
+async def help(event):
+    if borg.me.bot and not event.is_private:
+        return
+
+    shortname = event.pattern_match["shortname"]
+    plugin_dict = {}
+
     for name, mod in sorted(borg._plugins.items(), key=lambda t: t[0]):
-        desc = (mod.__doc__ or '__no description__').replace('\n', ' ').strip()
-        result += f'\n**{name}**: {desc}'
+        if name == "_core":
+            continue
+        desc = (mod.__doc__ or "No Description")
+        plugin_dict[name] = desc
+
+    plugin_list = "`\n• `".join(plugin_dict)
+
+    if not shortname:
+        result = f"**Plugins:**  "
+        if not borg.me.bot:
+            result += str(len(borg._plugins))
+
+        result += f"\n• `{plugin_list}` \
+                  \n\nSend `/help plugin_name` for more information."
+    else:
+        result = plugin_dict[shortname]
 
     if not borg.me.bot:
         await event.edit(result)
     else:
-        await event.respond(result)
+        await event.reply(result)
