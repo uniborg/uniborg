@@ -7,6 +7,7 @@ Deletes NFT spam
 import re
 
 from telethon import events
+from telethon import utils
 from telethon.tl.types import MessageMediaWebPage, PeerChannel
 
 generic_filters = [
@@ -118,6 +119,11 @@ async def is_spam(event):
                 for f in dot_io_filters:
                     if f.search(val):
                         return True
+
+    sender = await event.get_sender()
+    display_name = utils.get_display_name(sender)
+    if "2 TRX" in display_name:
+        return True
 
     return False
 
