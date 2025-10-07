@@ -64,7 +64,9 @@ invisible_chars = [
 
 italian_porn_filters = [
     re.compile(r"(?i)video (?:.* )?sul mio profilo"),
-    re.compile(r"(?i)Come ti piace il mio culo, bella?")
+    re.compile(r"(?i)Come ti piace il mio culo, bella\?"),
+    re.compile(r"(?i)Ciao a tutti, come il mio avаtar\?"),
+    re.compile(r"(?i)Ciao, come la mia figa\?"),
 ]
 def is_italian_porn_bot(text):
     text = (text
