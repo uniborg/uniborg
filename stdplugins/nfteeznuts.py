@@ -63,7 +63,7 @@ invisible_chars = [
 ]
 
 italian_porn_filters = [
-    re.compile(r"(?i)video (?:.* )?sul mio profilo"),
+    re.compile(r"(?i)video (?:.* )?sul mio profil?o"),
     re.compile(r"(?i)Come ti piace il mio culo, bella\?"),
     re.compile(r"(?i)Ciao a tutti, come il mio avаtar\?"),
     re.compile(r"(?i)Ciao, come la mia figa\?"),
