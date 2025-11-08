@@ -79,6 +79,12 @@ def is_italian_porn_bot(text):
         if f.search(text):
             return True
 
+display_name_filters = [
+    re.compile(r"2 TRX"),
+    # 转账只需1.3TrX 看我资料
+    re.compile(r"1\.3TrX"),
+]
+
 async def is_spam(event):
     for c in invisible_chars:
         if c in event.message.raw_text:
@@ -124,8 +130,9 @@ async def is_spam(event):
 
     sender = await event.get_sender()
     display_name = utils.get_display_name(sender)
-    if "2 TRX" in display_name:
-        return True
+    for f in display_name_filters:
+        if f.search(display_name):
+            return True
 
     return False
 
