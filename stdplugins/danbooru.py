@@ -48,7 +48,9 @@ async def _(event):
         url_orig = meta["file_url"]
         message_text = f"https://danbooru.donmai.us/posts/{post_id}"
         touhou = False
-        if src := meta.get("source"):
+        if pixiv_id := meta.get("pixiv_id"):
+            message_text += f"\nhttps://www.pixiv.net/artworks/{pixiv_id}"
+        elif src := meta.get("source"):
             message_text += f"\n{src}"
         if source := meta.get("tag_string_copyright"):
             message_text += f"\nSource: {fix_tag_string(source)}"
