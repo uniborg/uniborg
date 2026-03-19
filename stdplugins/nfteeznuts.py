@@ -62,6 +62,14 @@ invisible_chars = [
     *(chr(c) for c in range(0x2060, 0x2070)),
 ]
 
+t_me_types = [
+    "telegram_bot",
+    "telegram_botapp",
+    "telegram_channel",
+    "telegram_megagroup",
+    "telegram_user",
+]
+
 italian_porn_filters = [
     re.compile(r"(?i)video (?:.* )?sul mio profil?o"),
     re.compile(r"(?i)Come ti piace il mio culo, bella\?"),
@@ -103,7 +111,7 @@ async def is_spam(event):
         webpage = media.webpage
         domain = webpage.display_url.lower().split("/")[0]
 
-        if webpage.type in ("telegram_bot", "telegram_botapp"):
+        if webpage.type in t_me_types:
             return True
 
         if domain == "opensea.io":
